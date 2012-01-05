@@ -238,15 +238,16 @@ namespace HousingDistricts
                     text = text + " " + word;
                 }
 
-                if (args.Player.Group.HasPermission("adminchat") && !text.StartsWith("/") && TShock.Config.AdminChatEnabled)
+            	Group super = new SuperAdminGroup();
+                if (args.Player.Group.HasPermission("adminchat") && !text.StartsWith("/"))
                 {
-                    TShock.Utils.Broadcast(TShock.Config.AdminChatPrefix + "<" + args.Player.Name + ">" + text,
+					TShock.Utils.Broadcast(super.Prefix + "<" + args.Player.Name + ">" + text,
                                     args.Player.Group.R, args.Player.Group.G,
                                     args.Player.Group.B);
                     return;
                 }
 
-                TShock.Utils.Broadcast("{2}<{0}>{1}".SFormat(args.Player.Name, text, TShock.Config.ChatDisplayGroup ? "[{0}] ".SFormat(args.Player.Group.Name) : ""),
+                TShock.Utils.Broadcast("{2}<{0}>{1}".SFormat(args.Player.Name, text, true ? "[{0}] ".SFormat(args.Player.Group.Name) : ""),
                                 args.Player.Group.R, args.Player.Group.G,
                                 args.Player.Group.B);
             }

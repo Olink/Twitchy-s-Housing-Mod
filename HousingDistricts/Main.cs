@@ -113,8 +113,19 @@ namespace HousingDistricts
                 new SqlColumn("Locked", MySqlDbType.Int32)
             );
             SQLWriter.EnsureExists(table);
-
-            for (int i = 0; i < SQLEditor.ReadColumn("HousingDistrict", "ID", new List<SqlValue>()).Count; i++)
+        	var reader = TShock.DB.QueryReader("Select * from HousingDistrict");
+			while( reader.Read() )
+			{
+				int id = reader.Get<int>("ID");
+				string[] list = reader.Get<string>("Owners").Split(',');
+				List<string> owners = new List<string>();
+				foreach( string i in list)
+					owners.Add( i );
+				int locked = reader.Get<int>("Locked");
+				Houses.Add( new House( new Rectangle( reader.Get<int>("TopX"),reader.Get<int>("TopY"),reader.Get<int>("BottomX"),reader.Get<int>("BottomY") ), 
+					owners, id, reader.Get<string>("Name"), reader.Get<string>("WorldID"), locked));
+			}
+            /*for (int i = 0; i < SQLEditor.ReadColumn("HousingDistrict", "ID", new List<SqlValue>()).Count; i++)
             {
                 string[] list = SQLEditor.ReadColumn("HousingDistrict", "Owners", new List<SqlValue>())[i].ToString().Split(',');
                 List<string> items = new List<string>();
@@ -133,7 +144,7 @@ namespace HousingDistricts
 
                 Houses.Add(new House(
                     new Rectangle(
-                    (int)SQLEditor.ReadColumn("HousingDistrict", "TopX", new List<SqlValue>())[i],
+                    ("HousingDistrict", "TopX", new List<SqlValue>())[i],
                     (int)SQLEditor.ReadColumn("HousingDistrict", "TopY", new List<SqlValue>())[i],
                     (int)SQLEditor.ReadColumn("HousingDistrict", "BottomX", new List<SqlValue>())[i],
                     (int)SQLEditor.ReadColumn("HousingDistrict", "BottomY", new List<SqlValue>())[i]),
@@ -142,7 +153,7 @@ namespace HousingDistricts
                     (string)SQLEditor.ReadColumn("HousingDistrict", "Name", new List<SqlValue>())[i],
                     (string)SQLEditor.ReadColumn("HousingDistrict", "WorldID", new List<SqlValue>())[i],
                     locked));
-            }
+            }*/
             #endregion
 
             #region Commands
