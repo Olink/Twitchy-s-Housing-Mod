@@ -103,7 +103,7 @@ namespace HousingDistricts
 
             var table = new SqlTable("HousingDistrict",
                 new SqlColumn("ID", MySqlDbType.Int32) { Primary = true, AutoIncrement = true },
-                new SqlColumn("Name", MySqlDbType.Text) { Unique = true },
+                new SqlColumn("Name", MySqlDbType.Text) { Unique = true},
                 new SqlColumn("TopX", MySqlDbType.Int32),
                 new SqlColumn("TopY", MySqlDbType.Int32),
                 new SqlColumn("BottomX", MySqlDbType.Int32),
